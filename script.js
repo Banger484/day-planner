@@ -6,22 +6,23 @@ var saveButtons = document.getElementsByClassName('saveBtn')
 timeDisplay.textContent = moment().format('dddd, MMMM Do')
 
 for(let i = 0; i < rows.length; i++) {
-    if(i + 9 == currentHour) {
+    var hour = i + 9
+    if(hour == currentHour) {
         rows[i].setAttribute('class', 'present row time-block')
+        rows[i].children[1].textContent = localStorage.getItem(`${hour} am`)
     }
-    if(i + 9 > currentHour) {
+    if(hour > currentHour) {
         rows[i].setAttribute('class', 'future row time-block')
+        rows[i].children[1].textContent = localStorage.getItem(`${hour} am`)
     }
-    if (i + 9 < currentHour) {
+    if (hour < currentHour) {
         rows[i].setAttribute('class', 'past row time-block')
+        rows[i].children[1].textContent = localStorage.getItem(`${hour} am`)
     }
 }
 for (let i = 0; i < saveButtons.length; i++) {
     saveButtons[i].addEventListener('click', function () {
-        localStorage.setItem(rows[i].children[1].value)
+        var hour = i + 9
+        localStorage.setItem(`${hour} am`, rows[i].children[1].value)
     })
 }
-
-
-
-
